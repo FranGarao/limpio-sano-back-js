@@ -3,8 +3,8 @@ const { User } = require("../db/models");
 module.exports = {
   getUsers: async (_, res) => {
     try {
+      console.log(req.cookies);
       const users = await usersService.getUsers();
-      console.log(users);
       res.json({ ok: true, status: 200, users });
     } catch (error) {
       console.log(error);
@@ -14,7 +14,7 @@ module.exports = {
   register: async (req, res) => {
     try {
       const { username, email, password } = req.body;
-      console.log({"req.body": req.body});
+      console.log({ "req.body": req.body });
       const newUser = await usersService.register(username, email, password);
 
       res.json({ ok: true, status: 200, message: "User created", newUser });
@@ -25,6 +25,7 @@ module.exports = {
   },
   login: async (req, res) => {
     try {
+      console.log(req.cookies);
       const { username, email, password } = req.body;
       const user = await usersService.login(username, email, password);
       console.log(user);
@@ -40,6 +41,16 @@ module.exports = {
     console.log(userLogin);
     usersService.setCookies(req, res, user);
     res.json({ ok: true, status: 200, message: "Cookies set" });
+  },
+  logOut: async (req, res) => {
+    req.session.destroy((error) => {
+      if (error) {
+        console.log("Error al cerrar sesion", error);
+      } else {
+        res.clearCookie("token");
+        res.json({ message: "Logged out" });
+      }
+    });
   },
   deleteUser: async (req, res) => {
     try {

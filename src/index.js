@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
-
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const session = require('express-session');
 const PORT = process.env.PORT || 3001;
@@ -28,7 +28,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: true }
 }));
-
+app.use(cookieParser());
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true,
