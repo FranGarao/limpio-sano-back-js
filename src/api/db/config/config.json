@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "fran",
+    "password": "26deoctubrE26",
+    "database": "limpio_sano",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "fran",
+    "password": "26deoctubrE26",
+    "database": "limpio_sano",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "fran",
+    "password": "26deoctubrE26",
+    "database": "limpio_sano",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
