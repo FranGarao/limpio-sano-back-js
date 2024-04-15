@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const cors = require("cors");
+const session = require('express-session');
 const PORT = process.env.PORT || 3001;
 const API = process.env.API || "/api";
 
@@ -18,13 +19,25 @@ const API = process.env.API || "/api";
 const usersRoutes = require("./api/routes/users.routes");
 const serviceRoutes = require("./api/routes/services.routes");
 const categoriesRoutes = require("./api/routes/categories.routes");
+const faqsRoutes = require("./api/routes/faqs.routes");
 
 app.use(express.json());
-app.use(cors());
+app.use(session({
+  secret: 'pluto',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+}));
 /** Rutas */
 app.use(`${API}/users`, usersRoutes);
 app.use(`${API}/services`, serviceRoutes);
 app.use(`${API}/categories`, categoriesRoutes);
+app.use(`${API}/faqs`, faqsRoutes);
 
 app.get(`${API}/`, (_, res) => {
   res.send("Hello World!");

@@ -27,17 +27,18 @@ module.exports = {
     try {
       const { username, email, password } = req.body;
       const user = await usersService.login(username, email, password);
-
+      console.log(user);
+      usersService.setCookies(req, res, user);
       res.json({ ok: true, status: 200, message: "Login success", user });
     } catch (error) {
       console.log(error);
       res.json({ ok: false, status: 500, error });
     }
   },
-  setCookies: async (req, res) => {
+  setCookies: async (req, res, user) => {
     const userLogin = await User.findByPk(2);
     console.log(userLogin);
-    usersService.setCookies(req, res, userLogin);
+    usersService.setCookies(req, res, user);
     res.json({ ok: true, status: 200, message: "Cookies set" });
   },
   deleteUser: async (req, res) => {

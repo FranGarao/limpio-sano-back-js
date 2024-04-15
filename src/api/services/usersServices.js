@@ -62,7 +62,6 @@ module.exports = {
   const token = jwt.sign({ id: user.id }, process.env.SECRET, {
     expiresIn: 60 * 60 * 24,
   });
-  console.log({"user": user.dataValues});
   const cookieOptions = {
     httpOnly: true,
     secure: true,
@@ -72,9 +71,10 @@ module.exports = {
     //! sameSite: "none",
   };
 
+  console.log({"cookies": user});
   res.cookie("token", token, cookieOptions);
 //TODO: revisar xq rompe
-  req.session.user = user.dataValues;
+  req.session.user = user;
 },  
   // setCookies: async (_, res, user) => {
   //   res.cookie("user", user.username, {
