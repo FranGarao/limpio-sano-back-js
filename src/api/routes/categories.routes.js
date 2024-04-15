@@ -11,4 +11,6 @@ const categoriesController = require("../controllers/categoriesController");
 //GET /api/categories
 router.get("/", categoriesController.getCategories);
 
+router.get("/:categoryId", categoriesController.categoryById);
+
 module.exports = router;

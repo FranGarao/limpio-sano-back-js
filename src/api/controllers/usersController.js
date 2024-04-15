@@ -1,5 +1,5 @@
 const usersService = require("../services/usersServices");
-
+const { User } = require("../db/models");
 module.exports = {
   getUsers: async (_, res) => {
     try {
@@ -14,6 +14,7 @@ module.exports = {
   register: async (req, res) => {
     try {
       const { username, email, password } = req.body;
+      console.log({"req.body": req.body});
       const newUser = await usersService.register(username, email, password);
 
       res.json({ ok: true, status: 200, message: "User created", newUser });
@@ -25,8 +26,6 @@ module.exports = {
   login: async (req, res) => {
     try {
       const { username, email, password } = req.body;
-      console.log(req.body);
-      console.log("++++++++++++++++++++++++++++++");
       const user = await usersService.login(username, email, password);
 
       res.json({ ok: true, status: 200, message: "Login success", user });
@@ -34,6 +33,12 @@ module.exports = {
       console.log(error);
       res.json({ ok: false, status: 500, error });
     }
+  },
+  setCookies: async (req, res) => {
+    const userLogin = await User.findByPk(2);
+    console.log(userLogin);
+    usersService.setCookies(req, res, userLogin);
+    res.json({ ok: true, status: 200, message: "Cookies set" });
   },
   deleteUser: async (req, res) => {
     try {

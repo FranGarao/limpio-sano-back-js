@@ -1,6 +1,7 @@
-const { log } = require("console");
 const { User } = require("../db/models");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 module.exports = {
   getUsers: async () => {
     try {
@@ -22,6 +23,7 @@ module.exports = {
   },
   register: async (username, email, password) => {
     try {
+
       const hashedPw = bcrypt.hashSync(password, 11);
       const newUser = {
         username,
@@ -35,15 +37,12 @@ module.exports = {
       const user = await User.create(newUser);
       return user;
     } catch (error) {
-      console.log("ROMPIO");
+      console.log("ROMPIOaaaa");
       return error;
     }
   },
   login: async (username, email, password) => {
     try {
-      console.log("username: ", username);
-      console.log("email: ", email);
-      console.log("password: ", password);
       const user = await User.findOne({
         where: { username, email },
         raw: true,
@@ -59,6 +58,36 @@ module.exports = {
       return error;
     }
   },
+  setCookies: async (req, res, user) => {
+  const token = jwt.sign({ id: user.id }, process.env.SECRET, {
+    expiresIn: 60 * 60 * 24,
+  });
+  console.log({"user": user.dataValues});
+  const cookieOptions = {
+    httpOnly: true,
+    secure: true,
+    domain: "localhost",
+    path: '/',
+    maxAge: 60 * 60 * 24,
+    //! sameSite: "none",
+  };
+
+  res.cookie("token", token, cookieOptions);
+//TODO: revisar xq rompe
+  req.session.user = user.dataValues;
+},  
+  // setCookies: async (_, res, user) => {
+  //   res.cookie("user", user.username, {
+  //     httpOnly: true,
+  //     secure: true,
+  //     sameSite: "none",
+  //   });
+  //   res.cookie("email", user.email, {
+  //     httpOnly: true,
+  //     secure: true,
+  //     sameSite: "none",
+  //   });
+  // },
   deleteUser: async (id) => {
     try {
       const user = await User.destroy({ where: { id } });

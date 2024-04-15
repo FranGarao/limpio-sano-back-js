@@ -14,6 +14,9 @@ router.get("/", usersController.getUsers);
 //GET /api/users/login
 router.post("/login", usersController.login);
 
+//POST /api/users/cookies
+router.get("/cookies", usersController.setCookies);
+
 //POST /api/users/register
 router.post("/register", usersController.register);
 

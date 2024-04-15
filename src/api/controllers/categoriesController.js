@@ -12,4 +12,14 @@ module.exports = {
       res.json({ ok: false, status: 500, error });
     }
   },
+  categoryById: async (req, res) => {
+    try {
+      const { categoryId } = req.params;
+      const category = await categoriesService.categoryById(categoryId);
+      res.json({ ok: true, status: 200, category });
+    } catch (error) {
+      console.log(error);
+      res.json({ ok: false, status: 500, error });
+    }
+  }
 };
