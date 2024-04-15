@@ -73,6 +73,7 @@ module.exports = {
 
   console.log({"cookies": user});
   res.cookie("token", token, cookieOptions);
+  // res.cookie("logged", username, cookieOptions);
 //TODO: revisar xq rompe
   req.session.user = user;
 },  
