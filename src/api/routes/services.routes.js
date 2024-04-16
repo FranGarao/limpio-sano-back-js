@@ -4,12 +4,13 @@ const router = express.Router();
     Controller
  */
 const servicesController = require("../controllers/servicesController");
+const jsonWebTokenMiddleware = require("../middlewares/jsonWebToken");
 /**
     Routes
  */
 
 //GET /api/services
-router.get("/", servicesController.getServices);
+router.get("/", jsonWebTokenMiddleware, servicesController.getServices);
 
 router.get("/:categoryId", servicesController.serviceByCategory);
 

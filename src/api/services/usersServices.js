@@ -23,7 +23,6 @@ module.exports = {
   },
   register: async (username, email, password) => {
     try {
-
       const hashedPw = bcrypt.hashSync(password, 11);
       const newUser = {
         username,
@@ -59,24 +58,24 @@ module.exports = {
     }
   },
   setCookies: async (req, res, user) => {
-  const token = jwt.sign({ id: user.id }, process.env.SECRET, {
-    expiresIn: 60 * 60 * 24,
-  });
-  const cookieOptions = {
-    httpOnly: true,
-    secure: true,
-    domain: "localhost",
-    path: '/',
-    maxAge: 60 * 60 * 24,
-    //! sameSite: "none",
-  };
+    const token = jwt.sign({ id: user.id }, "pluto", {
+      expiresIn: 60 * 60 * 24 * 365, // Expires in one year
+    });
+    const cookieOptions = {
+      httpOnly: false,
+      secure: true,
+      domain: "localhost",
+      path: "/",
+      maxAge: 60 * 60 * 24,
+      //! sameSite: "none",
+    };
 
-  console.log({"cookies": user});
-  res.cookie("token", token, cookieOptions);
-  // res.cookie("logged", username, cookieOptions);
-//TODO: revisar xq rompe
-  req.session.user = user;
-},  
+    console.log({ cookies: user });
+    res.cookie("token", token, cookieOptions);
+    // res.cookie("logged", username, cookieOptions);
+    //TODO: revisar xq rompe
+    req.session.user = user;
+  },
   // setCookies: async (_, res, user) => {
   //   res.cookie("user", user.username, {
   //     httpOnly: true,

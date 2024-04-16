@@ -4,26 +4,31 @@ const router = express.Router();
     Controller
  */
 const usersController = require("../controllers/usersController");
+const jsonWebTokenMiddleware = require("../middlewares/jsonWebToken");
 /**
     Routes
  */
 
 //GET /api/users
-router.get("/", usersController.getUsers);
+router.get("/", jsonWebTokenMiddleware, usersController.getUsers);
 
 //GET /api/users/login
 router.post("/login", usersController.login);
 
 //POST /api/users/cookies
-router.get("/cookies", usersController.setCookies);
+// router.get("/cookies", usersController.setCookies);
 
 //GET api/users/logout
 router.post("/logout", usersController.logOut);
 
 //POST /api/users/register
-router.post("/register", usersController.register);
+router.post("/register", jsonWebTokenMiddleware, usersController.register);
 
 //DELETE /api/users/register
-router.delete("/delete/:id", usersController.deleteUser);
+router.delete(
+  "/delete/:id",
+  jsonWebTokenMiddleware,
+  usersController.deleteUser
+);
 
 module.exports = router;
