@@ -22,4 +22,15 @@ module.exports = {
       return error;
     }
   },
+  createService: async (service) => {
+    try {
+      console.log(service);
+      const newService = await Service.create(service);
+      console.log(service.img);
+      return newService;
+    } catch (error) {
+      console.log("ROMPIO");
+      return error;
+    }
+  },
 };
