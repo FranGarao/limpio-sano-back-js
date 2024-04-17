@@ -15,9 +15,6 @@ router.get("/", jsonWebTokenMiddleware, usersController.getUsers);
 //GET /api/users/login
 router.post("/login", usersController.login);
 
-//POST /api/users/cookies
-// router.get("/cookies", usersController.setCookies);
-
 //GET api/users/logout
 router.post("/logout", usersController.logOut);
 

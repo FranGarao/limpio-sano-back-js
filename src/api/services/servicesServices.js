@@ -29,7 +29,7 @@ module.exports = {
       console.log(service.img);
       return newService;
     } catch (error) {
-      console.log("ROMPIO");
+      console.log(error);
       return error;
     }
   },

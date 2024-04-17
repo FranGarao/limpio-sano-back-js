@@ -3,7 +3,6 @@ const { User } = require("../db/models");
 module.exports = {
   getUsers: async (_, res) => {
     try {
-      console.log(req.cookies);
       const users = await usersService.getUsers();
       res.json({ ok: true, status: 200, users });
     } catch (error) {
