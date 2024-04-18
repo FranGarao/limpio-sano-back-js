@@ -35,4 +35,10 @@ router.delete(
   usersController.deleteUser
 );
 
+//GET /api/users/authenticate
+router.get("/authenticate", usersController.getCode);
+
+//POST /api/users/verify/:code
+router.post("/verify", usersController.verifyCode);
+
 module.exports = router;

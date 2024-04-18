@@ -2,7 +2,8 @@ const { User } = require("../db/models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const usersController = require("../controllers/usersController");
-
+const speakEasy = require("speakeasy");
+const qrcode = require("qrcode");
 module.exports = {
   getUsers: async () => {
     try {
@@ -117,4 +118,22 @@ module.exports = {
       return error;
     }
   },
+  generateQr: async (secret) => {
+    try {
+      const data_url = await new Promise((resolve, reject) => {
+        qrcode.toDataURL(secret.otpauth_url, (err, url) => {
+          if (err) reject(err);
+          else resolve(url);
+        });
+      });
+
+      // Aquí puedes usar data_url fuera de la función
+      return data_url;
+    } catch (error) {
+      console.error("Error al generar el QR:", error);
+    }
+  },
+
 };
+
+

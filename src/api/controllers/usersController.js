@@ -1,6 +1,8 @@
 const usersService = require("../services/usersServices");
 const { User } = require("../db/models");
 const usersServices = require("../services/usersServices");
+const speakEasy = require("speakeasy");
+const qrcode = require("qrcode");
 module.exports = {
   getUsers: async (_, res) => {
     try {
@@ -73,6 +75,36 @@ garaofran@gmail.com
     } catch (error) {
       console.log(error);
       res.json({ ok: false, status: 500, error });
+    }
+  },
+
+  getCode: async (req, res) => {
+    try {
+      // const code = await usersService.getCode();
+      const secret = speakEasy.generateSecret({
+        name: "WeAreDevs",
+        length: 20,
+      });
+      const qrSrc = await usersService.generateQr(secret);
+      res.json({ ok: true, status: 200, qrSrc, secret });
+    } catch (error) {
+      console.log(error);
+      res.json({ ok: false, status: 500, error });
+    }
+  },
+  verifyCode: async (req, res) => {
+    console.log({req: req.body});
+    const { token, secret } = req.body;
+    try {
+      const verified = speakEasy.totp.verify({
+        secret,
+        encoding: "ascii",
+        token,
+      });
+      console.log({verified});
+      return verified;
+    } catch (error) {
+      console.error("Error al verificar el código:", error);
     }
   },
 };
