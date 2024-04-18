@@ -47,11 +47,16 @@ module.exports = {
         where: { username, email },
         raw: true,
       });
-      const validPw = bcrypt.compareSync(password, user?.password);
-      if (validPw) {
-        return user;
+      if (user) {
+        console.log(user);
+        const validPw = bcrypt.compareSync(password, user?.password);
+        if (validPw) {
+          return user;
+        } else {
+          return { error: "Invalid password" };
+        }
       } else {
-        return { error: "Invalid password" };
+        return { error: "Email o Username invalidos." };
       }
     } catch (error) {
       console.log({ error });
@@ -60,7 +65,7 @@ module.exports = {
   },
   setCookies: async (req, res, user) => {
     if (user.error) {
-     return user.error;
+      return user.error;
     } else {
       const token = jwt.sign({ id: user.id }, "pluto", {
         expiresIn: 60 * 60 * 24 * 365,

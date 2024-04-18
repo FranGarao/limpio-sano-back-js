@@ -27,7 +27,6 @@ module.exports = {
     try {
       const { username, email, password } = req.body;
       const user = await usersService.login(username, email, password);
-      console.log({AVER: user});
       if (!user) {
         res.json({ ok: false, status: 401, message: "Invalid password" });
       } else {
@@ -42,26 +41,6 @@ module.exports = {
   /*    
 garaofran@gmail.com
 */
-  // setCookies: async (req, res, user) => {
-  //   console.log("LLEGUE A SETCOOKIES");
-  //   const token = jwt.sign({ id: user.id }, "pluto", {
-  //     expiresIn: 60 * 60 * 24 * 365, // Expires in one year
-  //   });
-  //   const cookieOptions = {
-  //     httpOnly: false,
-  //     secure: true,
-  //     domain: "localhost",
-  //     path: "/",
-  //     maxAge: 60 * 60 * 24,
-  //     //! sameSite: "none",
-  //   };
-
-  //   console.log({ cookies: user });
-  //   res.cookie("token", token, cookieOptions);
-  //   // res.cookie("logged", username, cookieOptions);
-  //   //TODO: revisar xq rompe
-  //   req.session.user = user;
-  // },
   logOut: async (req, res) => {
     req.session.destroy((error) => {
       if (error) {
