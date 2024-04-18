@@ -5,7 +5,6 @@ module.exports = {
   getCategories: async (_, res) => {
     try {
       const categories = await categoriesService.getCategories();
-      console.log(categories);
       res.json({ ok: true, status: 200, categories });
     } catch (error) {
       console.log(error);

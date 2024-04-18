@@ -62,4 +62,17 @@ module.exports = {
       res.json({ ok: false, status: 500, error });
     }
   },
+
+  updateUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { username, email, password } = req.body;
+      const user = await usersService.updateUser(id, username, email, password);
+
+      res.json({ ok: true, status: 200, message: "User updated", user });
+    } catch (error) {
+      console.log(error);
+      res.json({ ok: false, status: 500, error });
+    }
+  },
 };

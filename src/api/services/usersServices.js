@@ -97,4 +97,17 @@ module.exports = {
       return error;
     }
   },
+  updateUser: async (id, username, email, password) => {
+    try {
+      const hashedPw = bcrypt.hashSync(password, 11);
+      const user = await User.update(
+        { username, email, password: hashedPw },
+        { where: { id } }
+      );
+      return user;
+    } catch (error) {
+      console.log("ROMPIO");
+      return error;
+    }
+  },
 };

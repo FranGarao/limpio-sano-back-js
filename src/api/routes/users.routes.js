@@ -21,6 +21,13 @@ router.post("/logout", usersController.logOut);
 //POST /api/users/register
 router.post("/register", jsonWebTokenMiddleware, usersController.register);
 
+//UPDATE /api/users/update/:id
+router.put(
+  "/update/:id",
+  //   jsonWebTokenMiddleware,
+  usersController.updateUser
+);
+
 //DELETE /api/users/register
 router.delete(
   "/delete/:id",
