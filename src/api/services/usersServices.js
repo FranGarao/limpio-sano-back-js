@@ -1,6 +1,7 @@
 const { User } = require("../db/models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const usersController = require("../controllers/usersController");
 
 module.exports = {
   getUsers: async () => {
@@ -50,31 +51,32 @@ module.exports = {
       if (validPw) {
         return user;
       } else {
-        return "Invalid password";
+        return { error: "Invalid password" };
       }
     } catch (error) {
-      console.log("ROMPIO aca");
+      console.log({ error });
       return error;
     }
   },
   setCookies: async (req, res, user) => {
-    const token = jwt.sign({ id: user.id }, "pluto", {
-      expiresIn: 60 * 60 * 24 * 365, // Expires in one year
-    });
-    const cookieOptions = {
-      httpOnly: false,
-      secure: true,
-      domain: "localhost",
-      path: "/",
-      maxAge: 60 * 60 * 24,
-      //! sameSite: "none",
-    };
-
-    console.log({ cookies: user });
-    res.cookie("token", token, cookieOptions);
-    // res.cookie("logged", username, cookieOptions);
-    //TODO: revisar xq rompe
-    req.session.user = user;
+    if (user.error) {
+     return user.error;
+    } else {
+      const token = jwt.sign({ id: user.id }, "pluto", {
+        expiresIn: 60 * 60 * 24 * 365,
+      });
+      const cookieOptions = {
+        httpOnly: false,
+        secure: true,
+        domain: "localhost",
+        path: "/",
+        maxAge: 60 * 60 * 24,
+        //! sameSite: "none",
+      };
+      res.cookie("token", token, cookieOptions);
+      //TODO: revisar xq rompe
+      req.session.user = user;
+    }
   },
   // setCookies: async (_, res, user) => {
   //   res.cookie("user", user.username, {
