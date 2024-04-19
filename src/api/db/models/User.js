@@ -25,5 +25,12 @@ module.exports = (sequelize, DataTypes) => {
   };
   const User = sequelize.define(alias, cols, config);
 
+  User.associate = (models) => {
+    User.hasMany(models.QrCode, {
+      as: "qr_codes",
+      foreignKey: "user_id",
+    });
+  }
+
   return User;
 };

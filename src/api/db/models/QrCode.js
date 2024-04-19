@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   QrCode.associate = (models) => {
     QrCode.belongsTo(models.User, {
       as: "users",
-      foreignKey: "fk_user_code",
+      foreignKey: "user_id",
     });
   };
 

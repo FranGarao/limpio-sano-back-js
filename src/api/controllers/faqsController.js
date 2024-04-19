@@ -3,6 +3,7 @@ const faqsServices = require('../services/faqsServices');
 module.exports = {
     getFaqs: async (req, res) => {
         const faqs = await faqsServices.getFaqs();
+        console.log(faqs);
         res.json(faqs);
     },
     faqById: async (req, res) => {
