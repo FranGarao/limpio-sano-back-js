@@ -21,6 +21,10 @@ const serviceRoutes = require("./api/routes/services.routes");
 const categoriesRoutes = require("./api/routes/categories.routes");
 const faqsRoutes = require("./api/routes/faqs.routes");
 
+//configuro la zona horaria a bs as 
+const moment = require('moment-timezone');
+moment.tz.setDefault("America/Argentina/Buenos_Aires");
+
 app.use(express.json());
 app.use(session({
   secret: 'pluto',

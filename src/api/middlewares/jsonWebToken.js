@@ -15,7 +15,6 @@ const jsonWebTokenMiddleware = (req, res, next) => {
     // Verify and decode the token
     const decoded = jwt.verify(token, "pluto");
     req.user = decoded;
-  console.log({decoded});
     // Call the next middleware or route handler
     next();
   } catch (error) {

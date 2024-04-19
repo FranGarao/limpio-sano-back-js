@@ -10,10 +10,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    price: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     category_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -21,15 +17,19 @@ module.exports = (sequelize, DataTypes) => {
         model: "categories",
         key: "id",
       },
-      description: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+    },
       img: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-    },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
   };
   const config = {
     tableName: "services",

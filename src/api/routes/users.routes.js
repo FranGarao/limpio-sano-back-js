@@ -10,7 +10,7 @@ const jsonWebTokenMiddleware = require("../middlewares/jsonWebToken");
  */
 
 //GET /api/users
-router.get("/", usersController.getUsers);
+router.get("/", jsonWebTokenMiddleware, usersController.getUsers);
 
 //GET /api/users/login
 router.post("/login", usersController.login);

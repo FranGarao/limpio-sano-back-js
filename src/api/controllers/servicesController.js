@@ -28,4 +28,31 @@ module.exports = {
       res.json({ ok: false, status: 500, error });
     }
   },
+  updateService: async (req, res) => {
+    const { serviceId } = req.params;
+    const service = {
+      title: req.body.title,
+      description: req.body.description,
+      img: req.body.img,
+      category_id: Number(req.body.category_id),
+    };
+    try {
+      const updatedService = await servicesService.updateService(
+        serviceId,
+        service
+      );
+      res.json({ ok: true, status: 200, updatedService });
+    } catch (error) {
+      res.json({ ok: false, status: 500, error });
+    }
+  },
+  deleteService: async (req, res) => {
+    const { serviceId } = req.params;
+    try {
+      const deletedService = await servicesService.deleteService(serviceId);
+      res.json({ ok: true, status: 200, deletedService });
+    } catch (error) {
+      res.json({ ok: false, status: 500, error });
+    }
+  },
 };

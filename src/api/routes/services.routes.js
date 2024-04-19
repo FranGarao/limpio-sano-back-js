@@ -22,4 +22,9 @@ router.post(
 
 router.get("/:categoryId", servicesController.serviceByCategory);
 
+//DELETE /api/services/delete/:serviceId
+router.delete("/delete/:serviceId", servicesController.deleteService);
+
+router.put("/update/:serviceId", servicesController.updateService);
+
 module.exports = router;

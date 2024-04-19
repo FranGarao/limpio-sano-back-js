@@ -2,6 +2,7 @@ const usersService = require("../services/usersServices");
 const { User, QrCode } = require("../db/models");
 const usersServices = require("../services/usersServices");
 const speakEasy = require("speakeasy");
+const moment = require("moment-timezone");
 module.exports = {
   getUsers: async (_, res) => {
     try {
@@ -117,6 +118,8 @@ garaofran@gmail.com
   verifyCode: async (req, res) => {
     console.log({ req: req.body });
     //TODO: cambiar el origen del token
+    moment.tz.setDefault("America/Argentina/Buenos_Aires");
+    let now = moment().unix();
     const { faCode } = req.body;
     const secret = await QrCode.findOne({ raw: true, where: { user_id: 2 } });
     try {
@@ -124,12 +127,14 @@ garaofran@gmail.com
         secret: secret?.code,
         encoding: "ascii",
         token: faCode,
+        window: 1,
       });
       const user = await User.findByPk(2);
       if (verified) {
         usersServices.setCookies(req, res, user);
-      }
+      } 
       console.log({ secret: secret.code, token: faCode, verified });
+      console.log(new Date());
       res.json({ ok: true, status: 200, verified });
     } catch (error) {
       console.error("Error al verificar el código:", error);
