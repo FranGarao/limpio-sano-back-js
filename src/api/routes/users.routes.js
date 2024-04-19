@@ -38,6 +38,11 @@ router.delete(
 //GET /api/users/authenticate
 router.get("/authenticate", usersController.getCode);
 
+router.post("/code", usersController.submitCode);
+
+//PUT /api/users/authenticate/:code
+// router.put("/authenticate/:id", usersController.putCode);
+
 //POST /api/users/verify/:code
 router.post("/verify", usersController.verifyCode);
 

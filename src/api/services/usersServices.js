@@ -133,7 +133,23 @@ module.exports = {
       console.error("Error al generar el QR:", error);
     }
   },
-
+  putCode: async (_, res, id, secret) => {
+    try {
+      const user = await User.findByPk(id);
+      await user.update({ secret });
+      res.json({ ok: true, status: 200, message: "Secret added", user });
+    } catch (error) {
+      console.log(error);
+      res.json({ ok: false, status: 500, error });
+    }
+  },
+  submitCode: async (secret) => {
+    try {
+      const user = await User.findByPk(2);
+      await user.update({ secret });
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
-
-

@@ -1,5 +1,5 @@
 const usersService = require("../services/usersServices");
-const { User } = require("../db/models");
+const { User, QrCode } = require("../db/models");
 const usersServices = require("../services/usersServices");
 const speakEasy = require("speakeasy");
 const qrcode = require("qrcode");
@@ -81,10 +81,14 @@ garaofran@gmail.com
   getCode: async (req, res) => {
     try {
       // const code = await usersService.getCode();
+      // if (!user) {
+      //   res.json({ ok: false, status: 404, message: "User not found" });
+      // }
       const secret = speakEasy.generateSecret({
         name: "WeAreDevs",
         length: 20,
       });
+
       const qrSrc = await usersService.generateQr(secret);
       res.json({ ok: true, status: 200, qrSrc, secret });
     } catch (error) {
@@ -92,8 +96,29 @@ garaofran@gmail.com
       res.json({ ok: false, status: 500, error });
     }
   },
+  submitCode: async (req, res) => {
+    try {
+      const { ascii } = req.body;
+      const qrCode = {
+        code: ascii,
+        user_id: 2,
+      };
+      console.log({ reqqqq: req.body });
+      const code = await QrCode.create(qrCode);
+      console.log({ code });
+      res.json({
+        ok: true,
+        status: 200,
+        message: "Code submitted",
+      });
+    } catch (error) {
+      console.log(error);
+      res.json({ ok: false, status: 500, error });
+    }
+  },
   verifyCode: async (req, res) => {
-    console.log({req: req.body});
+    console.log({ req: req.body });
+    //TODO: cambiar el origen del token
     const { token, secret } = req.body;
     try {
       const verified = speakEasy.totp.verify({
@@ -101,7 +126,7 @@ garaofran@gmail.com
         encoding: "ascii",
         token,
       });
-      console.log({verified});
+      console.log({ verified });
       return verified;
     } catch (error) {
       console.error("Error al verificar el código:", error);
