@@ -20,4 +20,33 @@ module.exports = {
         return error;
       });
   },
+  createCategory(name) {
+    return Category.create({ name })
+      .then((category) => {
+        return category;
+      })
+      .catch((error) => {
+        return error;
+      });
+  },
+  updateCategory(id, title) {
+    return Category.update({ title }, { where: { id } })
+      .then((category) => {
+        console.log(category);
+        return category;
+      })
+      .catch((error) => {
+        console.log(error);
+        return error;
+      });
+  },
+  deleteCategory(id) {
+    return Category.destroy({ where: { id } })
+      .then((category) => {
+        return category;
+      })
+      .catch((error) => {
+        return error;
+      });
+  },
 };

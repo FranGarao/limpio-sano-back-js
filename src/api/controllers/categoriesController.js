@@ -1,3 +1,4 @@
+const { create } = require("domain");
 const categoriesService = require("../services/categoriesServices");
 const { login } = require("../services/usersServices");
 
@@ -20,5 +21,56 @@ module.exports = {
       console.log(error);
       res.json({ ok: false, status: 500, error });
     }
-  }
+  },
+  createCategory: async (req, res) => {
+    try {
+      const { name } = req.body;
+      const newCategory = await categoriesService.createCategory(name);
+      res.json({
+        ok: true,
+        status: 200,
+        message: "Category created",
+        newCategory,
+      });
+    } catch (error) {
+      console.log(error);
+      res.json({ ok: false, status: 500, error });
+    }
+  },
+  updateCategory: async (req, res) => {
+    try {
+      const { categoryId } = req.params;
+      const { title } = req.body;
+      console.log(categoryId, title);
+      const updatedCategory = await categoriesService.updateCategory(
+        categoryId,
+        title
+      );
+      res.json({
+        ok: true,
+        status: 200,
+        message: "Category updated",
+        updatedCategory,
+      });
+    } catch (error) {
+      console.log(error);
+      res.json({ ok: false, status: 500, error });
+    }
+  },
+  deleteCategory: async (req, res) => {
+    try {
+      const { categoryId } = req.params;
+      const deletedCategory =
+        await categoriesService.deleteCategory(categoryId);
+      res.json({
+        ok: true,
+        status: 200,
+        message: "Category deleted",
+        deletedCategory,
+      });
+    } catch (error) {
+      console.log(error);
+      res.json({ ok: false, status: 500, error });
+    }
+  },
 };
