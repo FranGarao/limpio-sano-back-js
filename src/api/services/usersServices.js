@@ -65,9 +65,11 @@ module.exports = {
     }
   },
   setCookies: async (req, res, user) => {
+    //TODOL: revisar xq rompe cuando entra al if (probablemente error sea undefined)
     if (user.error) {
       return user.error;
     } else {
+      console.log("user", user);
       const token = jwt.sign({ id: user.id }, "pluto", {
         expiresIn: 60 * 60 * 24 * 365,
       });
@@ -143,9 +145,9 @@ module.exports = {
       res.json({ ok: false, status: 500, error });
     }
   },
-  submitCode: async (secret) => {
+  submitCode: async (secret, id) => {
     try {
-      const user = await User.findByPk(2);
+      const user = await User.findByPk(id);
       await user.update({ secret });
       return user;
     } catch (error) {

@@ -97,14 +97,23 @@ garaofran@gmail.com
   },
   submitCode: async (req, res) => {
     try {
-      const { ascii } = req.body;
+      console.log({ req: req.body });
+      const { secret, userId } = req.body;
+      console.log(userId);
       const qrCode = {
-        code: ascii,
-        user_id: 2,
+        code: secret?.ascii,
+        user_id: userId,
       };
-      console.log({ reqqqq: req.body });
-      const code = await QrCode.create(qrCode);
-      console.log({ code });
+      const repeatedCode = await QrCode.findOne({ where: { user_id: userId } });
+      if (repeatedCode) {
+        await repeatedCode.update(qrCode);
+        return res.json({
+          ok: true,
+          status: 200,
+          message: "Code updated",
+        });
+      }
+      await QrCode.create(qrCode);
       res.json({
         ok: true,
         status: 200,
@@ -119,8 +128,8 @@ garaofran@gmail.com
     console.log({ req: req.body });
     //TODO: cambiar el origen del token
     moment.tz.setDefault("America/Argentina/Buenos_Aires");
-    let now = moment().unix();
-    const { faCode } = req.body;
+    const { faCode } = req?.body;
+    const { userId } = req?.body;
     const secret = await QrCode.findOne({ raw: true, where: { user_id: 2 } });
     try {
       const verified = speakEasy.totp.verify({
@@ -129,10 +138,10 @@ garaofran@gmail.com
         token: faCode,
         window: 1,
       });
-      const user = await User.findByPk(2);
+      const user = await User.findByPk(userId);
       if (verified) {
         usersServices.setCookies(req, res, user);
-      } 
+      }
       console.log({ secret: secret.code, token: faCode, verified });
       console.log(new Date());
       res.json({ ok: true, status: 200, verified });

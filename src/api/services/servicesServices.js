@@ -7,7 +7,7 @@ module.exports = {
       console.log(services);
       return services;
     } catch (error) {
-      console.log("ROMPIO");
+      console.log({ error });
       return error;
     }
   },
@@ -19,7 +19,7 @@ module.exports = {
       });
       return services;
     } catch (error) {
-      console.log("ROMPIO");
+      console.log({ error });
       return error;
     }
   },
