@@ -20,6 +20,7 @@ const usersRoutes = require("./api/routes/users.routes");
 const serviceRoutes = require("./api/routes/services.routes");
 const categoriesRoutes = require("./api/routes/categories.routes");
 const faqsRoutes = require("./api/routes/faqs.routes");
+const contactRoutes = require("./api/routes/contact.routes");
 
 //configuro la zona horaria a bs as 
 const moment = require('moment-timezone');
@@ -42,6 +43,7 @@ app.use(`${API}/users`, usersRoutes);
 app.use(`${API}/services`, serviceRoutes);
 app.use(`${API}/categories`, categoriesRoutes);
 app.use(`${API}/faqs`, faqsRoutes);
+app.use(`${API}/contacts`, contactRoutes);
 
 app.get(`${API}/`, (_, res) => {
   res.send("Hello World!");
