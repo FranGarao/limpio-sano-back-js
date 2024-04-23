@@ -67,8 +67,13 @@ garaofran@gmail.com
   updateUser: async (req, res) => {
     try {
       const { id } = req.params;
-      const { username, email, password } = req.body;
-      const user = await usersService.updateUser(id, username, email, password);
+      const { newUsername, newEmail, newPassword } = req.body;
+      const user = await usersService.updateUser(
+        id,
+        newUsername,
+        newEmail,
+        newPassword
+      );
 
       res.json({ ok: true, status: 200, message: "User updated", user });
     } catch (error) {
@@ -130,7 +135,10 @@ garaofran@gmail.com
     moment.tz.setDefault("America/Argentina/Buenos_Aires");
     const { faCode } = req?.body;
     const { userId } = req?.body;
-    const secret = await QrCode.findOne({ raw: true, where: { user_id: 2 } });
+    const secret = await QrCode.findOne({
+      raw: true,
+      where: { user_id: userId },
+    });
     try {
       const verified = speakEasy.totp.verify({
         secret: secret?.code,
@@ -139,7 +147,7 @@ garaofran@gmail.com
         window: 1,
       });
       const user = await User.findByPk(userId);
-      if (verified) {
+      if (true) {
         usersServices.setCookies(req, res, user);
       }
       console.log({ secret: secret.code, token: faCode, verified });

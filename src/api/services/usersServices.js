@@ -8,6 +8,7 @@ module.exports = {
   getUsers: async () => {
     try {
       const users = await User.findAll({ raw: true });
+
       return users;
     } catch (error) {
       console.log("ROMPIO");
@@ -31,6 +32,7 @@ module.exports = {
         email,
         password: hashedPw,
       };
+      console.log({ newUser });
       // const userRegistered = await checkUserRegistered(username);
       // if (userRegistered) {
       //   throw new Error("User already exists");
@@ -38,7 +40,7 @@ module.exports = {
       const user = await User.create(newUser);
       return user;
     } catch (error) {
-      console.log("ROMPIOaaaa");
+      console.log({ error });
       return error;
     }
   },
@@ -103,7 +105,7 @@ module.exports = {
       const user = await User.destroy({ where: { id } });
       return user;
     } catch (error) {
-      console.log("ROMPIO");
+      console.log(error);
       return error;
     }
   },
@@ -116,7 +118,7 @@ module.exports = {
       );
       return user;
     } catch (error) {
-      console.log("ROMPIO");
+      console.log(error);
       return error;
     }
   },

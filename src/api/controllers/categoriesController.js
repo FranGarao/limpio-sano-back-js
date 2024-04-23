@@ -40,11 +40,11 @@ module.exports = {
   updateCategory: async (req, res) => {
     try {
       const { categoryId } = req.params;
-      const { title } = req.body;
-      console.log(categoryId, title);
+      const { category } = req.body;
+      console.log(categoryId, category);
       const updatedCategory = await categoriesService.updateCategory(
         categoryId,
-        title
+        category
       );
       res.json({
         ok: true,
