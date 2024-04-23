@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       as: "qr_codes",
       foreignKey: "user_id",
     });
-  }
+  };
 
   return User;
 };

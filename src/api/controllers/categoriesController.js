@@ -24,8 +24,8 @@ module.exports = {
   },
   createCategory: async (req, res) => {
     try {
-      const { name } = req.body;
-      const newCategory = await categoriesService.createCategory(name);
+      const { title, img } = req.body;
+      const newCategory = await categoriesService.createCategory(title, img);
       res.json({
         ok: true,
         status: 200,
@@ -41,7 +41,6 @@ module.exports = {
     try {
       const { categoryId } = req.params;
       const { category } = req.body;
-      console.log(categoryId, category);
       const updatedCategory = await categoriesService.updateCategory(
         categoryId,
         category

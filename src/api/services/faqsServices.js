@@ -20,14 +20,18 @@ module.exports = {
         return error;
       });
   },
-  createFaq(title, content) {
-    return Faq.create({ title, content })
-      .then((faq) => {
-        return faq;
-      })
-      .catch((error) => {
-        return error;
-      });
+  createFaq(title, description) {
+    try {
+      const faq = {
+        title,
+        description,
+      };
+      const newFaq = Faq.create(faq);
+      return newFaq;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
   },
   updateFaq(id, title, description) {
     return Faq.update({ title, description }, { where: { id } })

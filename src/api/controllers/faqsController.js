@@ -13,9 +13,16 @@ module.exports = {
     res.json(faq);
   },
   createFaq: async (req, res) => {
-    const { title, content } = req.body;
-    const faq = await faqsServices.createFaq(title, content);
-    res.json(faq);
+    const newFaq = {
+      title: req.body.title,
+      description: req.body.description,
+    };
+    console.log(newFaq);
+    const faq = await faqsServices.createFaq(
+      req.body.title,
+      req.body.description
+    );
+    res.json({ ok: true, status: 200, faq });
   },
   updateFaq: async (req, res) => {
     try {

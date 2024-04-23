@@ -23,17 +23,32 @@ module.exports = {
       return error;
     }
   },
-  createService: async (service) => {
+  createService: async (title, description, img, category_id) => {
     try {
-      console.log(service);
+      const service = {
+        title,
+        description,
+        img,
+        category_id,
+      };
+
+      console.log(
+        "========================================================================"
+      );
+      console.log({ service });
+
+      console.log(
+        "========================================================================"
+      );
       const newService = await Service.create(service);
-      console.log(service.img);
+
       return newService;
     } catch (error) {
       console.log(error);
       return error;
     }
   },
+
   updateService: async (serviceId, service) => {
     try {
       const updatedService = await Service.update(service, {

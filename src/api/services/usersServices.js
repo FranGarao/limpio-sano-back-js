@@ -8,7 +8,6 @@ module.exports = {
   getUsers: async () => {
     try {
       const users = await User.findAll({ raw: true });
-
       return users;
     } catch (error) {
       console.log("ROMPIO");

@@ -20,9 +20,15 @@ module.exports = {
     }
   },
   createService: async (req, res) => {
-    const service = req.body;
+    const { title, description, img, category_id } = req.body;
     try {
-      const newService = await servicesService.createService(service);
+      console.log(title, description, img, category_id);
+      const newService = await servicesService.createService(
+        title,
+        description,
+        img,
+        category_id
+      );
       res.json({ ok: true, status: 201, newService });
     } catch (error) {
       res.json({ ok: false, status: 500, error });

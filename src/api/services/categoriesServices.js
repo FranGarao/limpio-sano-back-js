@@ -20,8 +20,8 @@ module.exports = {
         return error;
       });
   },
-  createCategory(name) {
-    return Category.create({ name })
+  createCategory(title, img) {
+    return Category.create({ title, img })
       .then((category) => {
         return category;
       })

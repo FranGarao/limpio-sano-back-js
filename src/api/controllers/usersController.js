@@ -150,8 +150,6 @@ garaofran@gmail.com
       if (true) {
         usersServices.setCookies(req, res, user);
       }
-      console.log({ secret: secret.code, token: faCode, verified });
-      console.log(new Date());
       res.json({ ok: true, status: 200, verified });
     } catch (error) {
       console.error("Error al verificar el código:", error);
