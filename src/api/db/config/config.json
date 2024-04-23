@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "fran",
+    "username": "root",
     "password": "26deoctubrE26",
-    "database": "limpio_sano_v1",
-    "port": "3306",
+    "database": "limpio_sano",
+    "port": "6666",
     "host": "localhost",
     "dialect": "mysql"
   },
