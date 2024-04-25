@@ -20,7 +20,7 @@ router.post(
 );
 
 
-router.get("/:categoryId", servicesController.serviceByCategory);
+router.get("/category/:categoryId", servicesController.serviceByCategory);
 
 //DELETE /api/services/delete/:serviceId
 router.delete("/delete/:serviceId", servicesController.deleteService);

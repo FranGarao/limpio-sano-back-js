@@ -1,3 +1,4 @@
+const { getById } = require("../controllers/servicesController");
 const { Service } = require("../db/models");
 
 module.exports = {
@@ -69,6 +70,18 @@ module.exports = {
       return deletedService;
     } catch (error) {
       console.log(error);
+      return error;
+    }
+  },
+  getById: async (serviceId) => {
+    try {
+      const service = await Service.findOne({
+        where: { id: serviceId },
+        raw: true,
+      });
+      return service;
+    } catch (error) {
+      console.log({ error });
       return error;
     }
   },

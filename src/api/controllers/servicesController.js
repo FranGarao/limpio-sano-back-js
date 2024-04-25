@@ -61,4 +61,13 @@ module.exports = {
       res.json({ ok: false, status: 500, error });
     }
   },
+  getById: async (req, res) => {
+    const { serviceId } = req.params;
+    try {
+      const service = await servicesService.getById(serviceId);
+      res.json({ ok: true, status: 200, service });
+    } catch (error) {
+      res.json({ ok: false, status: 500, error });
+    }
+  },
 };
