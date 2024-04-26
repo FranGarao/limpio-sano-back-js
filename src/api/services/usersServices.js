@@ -1,4 +1,4 @@
-const { User } = require("../db/models");
+const { User, Secret } = require("../db/models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const usersController = require("../controllers/usersController");
@@ -153,6 +153,15 @@ module.exports = {
       return user;
     } catch (error) {
       console.log(error);
+    }
+  },
+  getSecret: async () => {
+    try {
+      const secret = await Secret.findOne({ raw: true, where: { id: 1 } });
+      return secret;
+    } catch (error) {
+      console.log(error);
+      return error;
     }
   },
 };

@@ -46,4 +46,8 @@ router.post("/code", usersController.submitCode);
 //POST /api/users/verify/:code
 router.post("/verify", usersController.verifyCode);
 
+router.get("/secret", usersController.getSecret);
+
+router.get('/verify/session', jsonWebTokenMiddleware, usersController.verifySession);
+
 module.exports = router;

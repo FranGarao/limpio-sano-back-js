@@ -155,4 +155,21 @@ garaofran@gmail.com
       console.error("Error al verificar el código:", error);
     }
   },
+  getSecret: async (req, res) => {
+    try {
+      const secret = await usersService.getSecret();
+      res.json({ ok: true, status: 200, secret });
+    } catch (error) {
+      console.log(error);
+      res.json({ ok: false, status: 500, error });
+    }
+  },
+  verifySession: async (req, res) => {
+    try {
+        res.json({ ok: true, status: 200, message: "Session found" });
+    } catch (error) {
+      console.log(error);
+      res.json({ ok: false, status: 500, error });
+    }
+  }
 };
