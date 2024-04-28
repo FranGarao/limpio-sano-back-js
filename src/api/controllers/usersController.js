@@ -130,27 +130,32 @@ garaofran@gmail.com
     }
   },
   verifyCode: async (req, res) => {
-    console.log({ req: req.body });
-    //TODO: cambiar el origen del token
-    moment.tz.setDefault("America/Argentina/Buenos_Aires");
-    const { faCode } = req?.body;
-    const { userId } = req?.body;
-    const secret = await QrCode.findOne({
-      raw: true,
-      where: { user_id: userId },
-    });
     try {
-      const verified = speakEasy.totp.verify({
-        secret: secret?.code,
-        encoding: "ascii",
-        token: faCode,
-        window: 1,
+      console.log({ req: req.body });
+      //TODO: cambiar el origen del token
+      moment.tz.setDefault("America/Argentina/Buenos_Aires");
+      const { faCode } = req?.body;
+      const { userId } = req?.body;
+      const secret = await QrCode.findOne({
+        raw: true,
+        where: { user_id: userId },
       });
-      const user = await User.findByPk(userId);
-      if (true) {
-        usersServices.setCookies(req, res, user);
+      console.log(secret);
+      if (secret) {
+        const verified = speakEasy.totp.verify({
+          secret: secret?.code,
+          encoding: "ascii",
+          token: faCode,
+          window: 1,
+        });
+        const user = await User.findByPk(userId);
+        if (verified) {
+          usersServices.setCookies(req, res, user);
+        }
+        res.json({ ok: true, status: 200, verified });
+      } else {
+        res.json({ ok: false, status: 404, message: "Code not found" });
       }
-      res.json({ ok: true, status: 200, verified });
     } catch (error) {
       console.error("Error al verificar el código:", error);
     }
@@ -166,10 +171,10 @@ garaofran@gmail.com
   },
   verifySession: async (req, res) => {
     try {
-        res.json({ ok: true, status: 200, message: "Session found" });
+      res.json({ ok: true, status: 200, message: "Session found" });
     } catch (error) {
       console.log(error);
       res.json({ ok: false, status: 500, error });
     }
-  }
+  },
 };

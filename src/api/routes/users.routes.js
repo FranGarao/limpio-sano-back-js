@@ -48,6 +48,10 @@ router.post("/verify", usersController.verifyCode);
 
 router.get("/secret", usersController.getSecret);
 
-router.get('/verify/session', jsonWebTokenMiddleware, usersController.verifySession);
+router.get(
+  "/verify/session",
+  jsonWebTokenMiddleware,
+  usersController.verifySession
+);
 
 module.exports = router;
