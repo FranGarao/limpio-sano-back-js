@@ -17,6 +17,8 @@ router.get("/", contactsController.getContacts);
 
 router.put("/update/:contactId", contactsController.updateContact);
 
+router.post("/submit", contactsController.submitEmail);
+
 // router.delete("/delete/:faqId", faqsController.deleteContact);
 
 module.exports = router;

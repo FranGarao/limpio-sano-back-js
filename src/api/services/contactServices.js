@@ -41,4 +41,7 @@ module.exports = {
         return error;
       });
   },
+  submitEmail(email) {
+    console.log({ email });
+  }
 };
