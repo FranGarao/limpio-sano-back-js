@@ -31,8 +31,8 @@ module.exports = {
       });
   },
   updateContact(id, info, type) {
-    console.log({ info});
-    return Contact.update({ info, type }, { where: { id } })
+    console.log({ id, info, type });
+    return Contact.update({ contact: info, type }, { where: { id } })
       .then((contact) => {
         return contact;
       })
@@ -43,5 +43,14 @@ module.exports = {
   },
   submitEmail(email) {
     console.log({ email });
-  }
+  },
+  deleteContact(id) {
+    return Contact.destroy({ where: { id } })
+      .then((contact) => {
+        return contact;
+      })
+      .catch((error) => {
+        return error;
+      });
+  },
 };

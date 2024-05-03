@@ -11,11 +11,14 @@ const contactsController = require("../controllers/contactController");
 //GET /api/faqs
 router.get("/", contactsController.getContacts);
 
+router.get("/dash", contactsController.getContacts);
+
 // router.get("/:faqId", faqsController.contactById);
 
 // router.post("/create", faqsController.createContact);
+router.delete("/delete/:id", contactsController.deleteContact);
 
-router.put("/update/:contactId", contactsController.updateContact);
+router.put("/update/:id", contactsController.updateContact);
 
 router.post("/submit", contactsController.submitEmail);
 

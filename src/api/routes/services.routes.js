@@ -10,7 +10,9 @@ const jsonWebTokenMiddleware = require("../middlewares/jsonWebToken");
  */
 
 //GET /api/services
-router.get("/",servicesController.getServices);
+router.get("/", servicesController.getServices);
+
+router.get("/dash", jsonWebTokenMiddleware, servicesController.getServices);
 
 //POST /api/services/create
 router.post(
@@ -18,7 +20,6 @@ router.post(
   //   jsonWebTokenMiddleware,
   servicesController.createService
 );
-
 
 router.get("/category/:categoryId", servicesController.serviceByCategory);
 

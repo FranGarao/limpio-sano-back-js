@@ -6,20 +6,20 @@ module.exports = {
     contactServices
       .getContacts()
       .then((contacts) => {
-        res.json(contacts);
+        res.json({ ok: true, status: 200, contacts });
       })
       .catch((error) => {
         res.status(500).send(error);
       });
   },
   updateContact: (req, res) => {
-    const id = req.params.contactId;
-    const { info, type } = req.body;
-    console.log(id, info, type);
+    const id = req.params.id;
+    const { contact, type } = req.body;
+    console.log(id, contact, type);
     contactServices
-      .updateContact(id, info, type)
+      .updateContact(id, contact, type)
       .then((contact) => {
-        res.json(contact);
+        res.json({ ok: true, status: 200, contact });
       })
       .catch((error) => {
         console.log(error);
@@ -49,14 +49,25 @@ module.exports = {
     };
     console.log({ body: req.body });
     console.log({ email });
+    contactServices.submitEmail(email);
+    // .then((response) => {
+    //   res.json(response);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    //   res.status(500).send(error);
+    // });
+  },
+  deleteContact: (req, res) => {
+    const id = req.params.id;
     contactServices
-      .submitEmail(email)
-      // .then((response) => {
-      //   res.json(response);
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      //   res.status(500).send(error);
-      // });
+      .deleteContact(id)
+      .then((contact) => {
+        res.json(contact);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send;
+      });
   },
 };
