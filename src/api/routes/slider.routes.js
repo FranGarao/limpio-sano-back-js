@@ -1,13 +1,18 @@
 const express = require("express");
 const router = express.Router();
+const jsonWebTokenMiddleware = require("../middlewares/jsonWebToken");
+
+
 const sliderController = require("../controllers/sliderController");
 
 router.get("/", sliderController.getSliderImages);
 
-router.post("/create", sliderController.createSliderImage);
+router.get("/dash", jsonWebTokenMiddleware, sliderController.getSliderImages);
 
-router.put("/update/:id", sliderController.updateSliderImage);
+router.post("/create",jsonWebTokenMiddleware, sliderController.createSliderImage);
 
-router.delete("/delete/:id", sliderController.deleteSliderImage);
+router.put("/update/:id", jsonWebTokenMiddleware, sliderController.updateSliderImage);
+
+router.delete("/delete/:id", jsonWebTokenMiddleware, sliderController.deleteSliderImage);
 
 module.exports = router;

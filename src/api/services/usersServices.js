@@ -79,7 +79,7 @@ module.exports = {
         secure: true,
         domain: "localhost",
         path: "/",
-        maxAge: 60 * 60 * 24,
+        maxAge: 60 * 60 * 60 * 24 * 365,
         //! sameSite: "none",
       };
       res.cookie("token", token, cookieOptions);

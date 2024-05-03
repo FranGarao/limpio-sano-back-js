@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const jsonWebTokenMiddleware = require("../middlewares/jsonWebToken");
+
 /**
     Controller
  */
 const usersController = require("../controllers/usersController");
-const jsonWebTokenMiddleware = require("../middlewares/jsonWebToken");
 /**
     Routes
  */
@@ -19,12 +20,12 @@ router.post("/login", usersController.login);
 router.post("/logout", usersController.logOut);
 
 //POST /api/users/register
-router.post("/register", usersController.register);
+router.post("/register", jsonWebTokenMiddleware,usersController.register);
 
 //UPDATE /api/users/update/:id
 router.put(
   "/update/:id",
-  //   jsonWebTokenMiddleware,
+    jsonWebTokenMiddleware,
   usersController.updateUser
 );
 
@@ -38,13 +39,13 @@ router.delete(
 //GET /api/users/authenticate
 router.get("/authenticate", usersController.getCode);
 
-router.post("/code", usersController.submitCode);
+router.post("/code", jsonWebTokenMiddleware, usersController.submitCode);
 
 //PUT /api/users/authenticate/:code
 // router.put("/authenticate/:id", usersController.putCode);
 
 //POST /api/users/verify/:code
-router.post("/verify", usersController.verifyCode);
+router.post("/verify",usersController.verifyCode);
 
 router.get("/secret", usersController.getSecret);
 

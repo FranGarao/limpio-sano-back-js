@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const jsonWebTokenMiddleware = require("../middlewares/jsonWebToken");
+
 /**
     Controller
  */
@@ -11,16 +13,16 @@ const contactsController = require("../controllers/contactController");
 //GET /api/faqs
 router.get("/", contactsController.getContacts);
 
-router.get("/dash", contactsController.getContacts);
+router.get("/dash", jsonWebTokenMiddleware, contactsController.getContacts);
 
 // router.get("/:faqId", faqsController.contactById);
 
 // router.post("/create", faqsController.createContact);
-router.delete("/delete/:id", contactsController.deleteContact);
+router.delete("/delete/:id", jsonWebTokenMiddleware, contactsController.deleteContact);
 
-router.put("/update/:id", contactsController.updateContact);
+router.put("/update/:id", jsonWebTokenMiddleware, contactsController.updateContact);
 
-router.post("/submit", contactsController.submitEmail);
+router.post("/submit", jsonWebTokenMiddleware, contactsController.submitEmail);
 
 // router.delete("/delete/:faqId", faqsController.deleteContact);
 
