@@ -46,8 +46,8 @@ module.exports = {
     try {
       const transporter = nodemailer.createTransport({
         host: "smtp.ethereal.email", //smtp.gmail.com para gmail
-        port: 587,
-        secure: false,
+        port: 465,
+        secure: true,
         auth: {
           user: "garaofran@gmail.com",
           pass: "wgpr tsxm imus kdmj",
@@ -73,7 +73,7 @@ module.exports = {
 
 // Al igual que la contraseña normal, esta contraseña de aplicación ofrece acceso completo a tu cuenta de Google. No tendrás que recordarla, así que no la escribas ni la compartas con nadie.
       console.log({ user });
-      const info = await transporter.sendMail({
+      const info = transporter.sendMail({
         from: user.client,
         to: "garaofran@gmail.com",
         subject: "userTitleVar",
@@ -81,9 +81,9 @@ module.exports = {
         html: "<b>userMSGVar</b>", //? Ver si es necesario sino a casa
       });
       console.log({ emailXD: info.text });
-      console.log(`Message sent: ${info.messageId}`);
+      console.log("termino");
     } catch (error) {
-      console.log(error);
+      console.log({"***ERROR***": error});
     }
   },
   deleteContact(id) {
