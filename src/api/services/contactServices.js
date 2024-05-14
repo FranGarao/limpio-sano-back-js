@@ -1,4 +1,5 @@
 const { Contact } = require("../db/models");
+const nodemailer = require("nodemailer");
 
 module.exports = {
   getContacts: async () => {
@@ -41,8 +42,49 @@ module.exports = {
         return error;
       });
   },
-  submitEmail(email) {
-    console.log({ email });
+  async submitEmail(email) {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email", //smtp.gmail.com para gmail
+        port: 587,
+        secure: false,
+        auth: {
+          user: "garaofran@gmail.com",
+          pass: "wgpr tsxm imus kdmj",
+        },
+      });
+      const client = {
+        name: email.client.name
+          ? email.client.name + email.client.lastname
+          : email.client.businness,
+      };
+      const user = {
+        client,
+        email: email.email,
+        phone: email.phone,
+        city: email.city,
+        establishment: email.establishment,
+        service: email.service,
+        startDate: email.startDate,
+        endDate: email.endDate,
+        message: email.msg,
+      };
+// Accede a la sección de configuración de tu cuenta de Google en la aplicación o el dispositivo que estés intentando configurar. Sustituye tu contraseña por la contraseña de 16 caracteres que se muestra arriba.
+
+// Al igual que la contraseña normal, esta contraseña de aplicación ofrece acceso completo a tu cuenta de Google. No tendrás que recordarla, así que no la escribas ni la compartas con nadie.
+      console.log({ user });
+      const info = await transporter.sendMail({
+        from: user.client,
+        to: "garaofran@gmail.com",
+        subject: "userTitleVar",
+        text: `${user.client}\nEmail: ${user.email}\nPhone: ${user.phone}\nCity: ${user.city}\nEstablishment: ${user.establishment}\nService: ${user.service}\nStart Date: ${user.startDate}\nEnd Date: ${user.endDate}\nMessage: ${user.message}`,
+        html: "<b>userMSGVar</b>", //? Ver si es necesario sino a casa
+      });
+      console.log({ emailXD: info.text });
+      console.log(`Message sent: ${info.messageId}`);
+    } catch (error) {
+      console.log(error);
+    }
   },
   deleteContact(id) {
     return Contact.destroy({ where: { id } })

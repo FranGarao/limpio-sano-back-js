@@ -7,7 +7,6 @@ const cors = require("cors");
 const session = require("express-session");
 const PORT = process.env.PORT || 3001;
 const API = process.env.API || "/api";
-
 //Debug
 // const debug = require("debug")("express-app");
 // app.get(`/debug`, (_, res) => {

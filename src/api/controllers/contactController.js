@@ -50,13 +50,7 @@ module.exports = {
     console.log({ body: req.body });
     console.log({ email });
     contactServices.submitEmail(email);
-    // .then((response) => {
-    //   res.json(response);
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    //   res.status(500).send(error);
-    // });
+
   },
   deleteContact: (req, res) => {
     const id = req.params.id;
